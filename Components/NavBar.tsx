@@ -4,7 +4,7 @@ import { UserButton } from '@clerk/nextjs'
 
 const NavBar = () => {
   return (
-    <div className=' border-b-[1px] rounded-xl shadow-lg py-3 px-5 md:px-12 flex items-center text-center justify-between'>
+    <div className=' py-3 px-5 md:px-12 flex items-center text-center justify-between'>
         <div>
             <Image src="/logo.png" alt='Logo' height={100} width={100} />
         </div>
