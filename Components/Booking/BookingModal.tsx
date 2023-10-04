@@ -28,7 +28,7 @@ function BookingModal({ car }: any) {
         </div>
 
         <div>
-          <Form/>
+          <Form car = {car}/>
         </div>
 
       </div>

@@ -9,7 +9,8 @@ const CarList = (props:any) => {
   return (
     <div  className=' grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
         {props.carsData.map((car: any, index: number)=>(
-            <div key={index} className=' m-2 flex  justify-center rounded-lg' onClick={()=>{document.getElementById('my_modal_4').showModal(); setSelectedCar(car)}}>
+            <div key={index} className=' m-2 flex  justify-center rounded-lg' onClick={()=>{(window as any).my_modal_4.showModal();
+              setSelectedCar(car)}}>
                 <CarCard car = {car} />
             </div>
         ))}

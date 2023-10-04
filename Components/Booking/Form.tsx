@@ -1,16 +1,36 @@
 "use client";
 
-import React, { useState } from "react";
+import { BookingDetail } from "@/Services";
+import { BookingContext } from "@/context/BookingContext";
+import React, { useContext, useEffect, useState } from "react";
 
-const Form = () => {
+const Form = ({ car }: any) => {
+  const {showToast, setShowToast} = useContext(BookingContext)
   const [formValue, setFormValue] = useState({
+    username:"",
     location: "",
     pickupDate: "",
     dropoffDate: "",
     pickupTime: "",
     dropoffTime: "",
     contact: "",
+    carId: "",
   });
+  useEffect(()=>{
+    setFormValue({
+      ...formValue,
+      carId: car.id,
+    });
+  },[car])
+
+  useEffect(() => {
+    if (showToast) {
+      setTimeout(function () {
+        setShowToast(false)
+      },2000)
+    }
+  },[showToast])
+
   const HandleChange = (event: any) => {
     event.preventDefault();
     setFormValue({
@@ -18,19 +38,40 @@ const Form = () => {
       [event.target.name]: event.target.value,
     });
   };
-  const HandleSubmit = () => {
+
+  const HandleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log(formValue);
+    // console.log(formValue);
+    const resp = await BookingDetail(formValue)
+    // console.log(resp);
+    if (resp) {
+      setShowToast(true)
+    }
+    
   };
   return (
     <div>
       <div className="form-control w-full max-w-xs">
+      <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text">Enter Name</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Type here"
+            name="username"
+            required
+            onChange={HandleChange}
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
         <label className="label">
           <span className="label-text">Pickup Location</span>
         </label>
         <select
           className="select select-bordered"
           name="location"
+          required
           onChange={HandleChange}
         >
           <option disabled selected>
@@ -50,6 +91,7 @@ const Form = () => {
             type="date"
             placeholder="Type here"
             name="pickupDate"
+            required
             onChange={HandleChange}
             className="input input-bordered w-full max-w-xs"
           />
@@ -62,6 +104,7 @@ const Form = () => {
             type="date"
             placeholder="Type here"
             name="dropoffDate"
+            required
             onChange={HandleChange}
             className="input input-bordered w-full max-w-xs"
           />
@@ -76,6 +119,7 @@ const Form = () => {
             type="time"
             placeholder="Type here"
             name="pickupTime"
+            required
             onChange={HandleChange}
             className="input input-bordered w-full max-w-xs"
           />
@@ -88,6 +132,7 @@ const Form = () => {
             type="time"
             placeholder="Type here"
             name="dropoffTime"
+            required
             onChange={HandleChange}
             className="input input-bordered w-full max-w-xs"
           />
@@ -101,6 +146,7 @@ const Form = () => {
           type="contact"
           placeholder="Type here"
           name="contact"
+          required
           onChange={HandleChange}
           className="input input-bordered w-full max-w-xs"
         />
